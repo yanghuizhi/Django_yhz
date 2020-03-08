@@ -25,6 +25,7 @@ SECRET_KEY = '961z-+!jaq)o(i7k3!u!er)gj6d4w3eofwtp^vys&z%sgmvoq='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# 只允许列表中的ip地址访问
 ALLOWED_HOSTS = []
 
 

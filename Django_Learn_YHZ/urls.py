@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from app1 import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('article/',views.article),
+    # path('article-(\d+)-(\d+).html',views.article),
+    # path('article-(?P<article_type_id>\d+)-(?P<category_id>\d+).html',views.article, name='article'),
 ]
