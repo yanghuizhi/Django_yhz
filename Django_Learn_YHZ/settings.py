@@ -25,9 +25,9 @@ SECRET_KEY = '961z-+!jaq)o(i7k3!u!er)gj6d4w3eofwtp^vys&z%sgmvoq='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# 只允许列表中的ip地址访问
+# 域名访问权限, 当debug为false时，必须要设置域名权限
 ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -38,8 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',        # 会话框架
     'django.contrib.messages',        # 消息框架
     'django.contrib.staticfiles',     # 管理静态文件的框架
-    'app1',  # 第一步，创建app后进行注册
+
+    'widget_tweaks', # 更好的控制渲染的处理
+    'django.contrib.humanize',  # 内置的人性化
+    'app_blog', # 注册 blog 应用
+
+    'app_boards',
+    'app_accounts', # 拆解上一个系统，独立登录系统
 ]
+
 
 # middleware 中间件
 MIDDLEWARE = [
@@ -52,7 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# 项目名称
+# 根路由配置
 ROOT_URLCONF = 'Django_Learn_YHZ.urls'
 
 # 注册静态网页地址
@@ -68,7 +75,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',  # 添加 media 模板第一步
             ],
+            # 为了 gravatar 添加的
+        # 'libraries':{
+        #         'gravatar': 'main.templatetags.gravatar',
+        #     }
         },
     },
 ]
@@ -80,6 +92,7 @@ WSGI_APPLICATION = 'Django_Learn_YHZ.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -87,7 +100,8 @@ DATABASES = {
     }
 }
 
-# 或者采用mysql，代码如下
+
+# 或者采用 mysql，代码如下
 # DATABASES = {
 #    'default': {
 #        'ENGINE': 'django.db.backends.mysql',
@@ -98,6 +112,26 @@ DATABASES = {
 #        'PORT': '3306',            # 你的数据库端口
 #    }
 # }
+
+# # Redis 配置
+# # 在Django框架中经常使用redid来保存我们的session值。
+# # 如何配置用我们的redis数据库来储存我们的session？
+# # 首先在虚拟环境中安装包：pip install django-redis-session==0.5.6
+# # 需要在settings.py中配置:
+# # 你使用的主要数据库还是mysql数据库，只是单独的session保存在sredis数据库中。
+# # 设置redis储存session
+# SESSION_ENGINE = 'redis_session.session'
+# # ip地址
+# SESSION_REDIS_HOST = 'localhost'
+# # 端口号
+# SESSION_REDIS_PORT = 6379
+# # 那个数据库
+# SESSION_REDIS_DB = 2
+# # 密码，我们没有设置密码
+# SESSION_REDIS_PASSWORD = ''
+# # session的标识码
+# SESSION_REDIS_PREFIX='session'
+# # 在Django中读取和设置session都还是一样的，没有区别
 
 
 # Password validation
@@ -122,11 +156,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-# LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'       # 默认英文
 # TIME_ZONE = 'UTC'
 
-LANGUAGE_CODE = 'zh-hans'       # 中文
-TIME_ZONE = 'Asia/Shanghai'     # 中国时区
+LANGUAGE_CODE = 'zh-hans'       # 中文、时区
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -140,10 +174,25 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# 配置静态文件路径
+STATICFILES_DIRS = (
+      os.path.join(BASE_DIR, 'static'),
+    )
+
+# 配置 media第二步路径，存放用户上传的图片资料等
+MEDIA_URL = '/matem/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'matem')
+
+
 # setting配置三步走
 # 1、注册APP，（INSTALLED_APPS）
 # 2、配置模版路径，（新版django已默认配置）
-# 3、配置静态文件，（新版django已默认配置）
-#   STATICFILES_DIRS = (
-#       os.path.join(BASE_DIR, 'static'),
-#    )
+# 3、配置静态文件，（需要手动配置路径）
+
+# 变量指定了一个URL模型的名称，以告诉Django当用户退出登录之后跳转的地址。
+LOGOUT_REDIRECT_URL = 'home'
+
+# 邮件
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# 重定向登录界面
+LOGIN_URL = 'login'
