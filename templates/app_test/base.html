@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'css/simplemde.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    {# 响应式布局#}
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+</head>
+
+<body>
+ <!-- As a link -->
+ <nav class="navbar navbar-light bg-light">
+     <a class="navbar-brand" href="#">Navbar</a>
+ </nav>
+
+    <br/>
+    <h1>My helpful timestamp site</h1>
+
+    {% block content %}{% endblock %}
+
+    {% block footer %}
+        <p>Thanks for visiting my site.</p>
+    {% endblock %}
+
+</body>
+</html>

@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',  # 内置的人性化
     'app_blog', # 注册 blog 应用
 
+    'app_test', # 测试类
+    
     'app_boards',
     'app_accounts', # 拆解上一个系统，独立登录系统
 ]
@@ -66,8 +68,7 @@ ROOT_URLCONF = 'Django_Learn_YHZ.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

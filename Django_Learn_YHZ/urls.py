@@ -21,29 +21,37 @@ from app_blog import views as blog_view
 from app_boards import views as boards_view
 from app_accounts import views as accounts_views
 from django.contrib.auth import views as auth_views
-
+from app_test import views as test_view
 # app_name='Django_Learn_YHZ.urls'
 
 urlpatterns = [
+    path('learn/',test_view.learn_1),
+    path('learn/<offset>/',test_view.learn_3),
+    path('learn4/',test_view.learn_4),
+    path('learn5/',test_view.search_form),
+    path('learn6/',test_view.learn_6),
+    path('learn66/',test_view.login_action),
+
+
     path('admin/', admin.site.urls),
     path('blog/', blog_view.index),
-    path('posts/<int:pk>/', blog_view.detail, name='detail'),
+    path('posts/<pk>/', blog_view.detail, name='detail'),
 
     # app_boards 博客系统
     path('home/', boards_view.BoardListView.as_view(), name='home'),
     # path('boards/<int:pk>/', boards_view.board_topics, name='board_topics'),
-    path('boards/(?P<pk>\d+)/new/', boards_view.new_topic, name='new_topic'),
-    path('boards/(?P<pk>\d+)/', boards_view.TopicListView.as_view (),
+    path('boards/<pk>/new/', boards_view.new_topic, name='new_topic'),
+    path('boards/<pk>/', boards_view.TopicListView.as_view (),
          name='board_topics'),
     # 片段
-    path('boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/',
+    path('boards/(<pk>/topics/<topic_pk>/',
          boards_view.PostListView.as_view(), name='topic_posts'),
 
     # app_accounts 拆分上述博客系统的账户系统
     path('signup/', accounts_views.signup, name='signup'),
     path('logout/', auth_views.LogoutView.as_view(),
          name='logout'),
-    path(r'login/', auth_views.LoginView.as_view(
+    path('login/', auth_views.LoginView.as_view(
         template_name='app_accounts/login.html'), name='login'),
 
     path('reset/', auth_views.PasswordResetView.as_view(
@@ -54,7 +62,7 @@ urlpatterns = [
     path('reset/done/', auth_views.PasswordResetDoneView.as_view(
         template_name='app_accounts/password_reset_done.html'),
         name='password_reset_done'),
-    path('reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z ]{1,13}-[0-9A-Za-z]{1,20})/', auth_views.PasswordResetConfirmView.as_view(
+    path('reset/<uidb64>/<token>[0-9A-Za-z ]{1,13}-[0-9A-Za-z]{1,20}/', auth_views.PasswordResetConfirmView.as_view(
         template_name='app_accounts/password_reset_confirm.html'),
         name='password_reset_confirm'),
     path('reset/complete/', auth_views.PasswordResetCompleteView.as_view(
@@ -69,12 +77,12 @@ urlpatterns = [
         name='password_change_done'),
 
     # 主题回复
-    path('boards/(?P<pk>\d+)/topics/<topic_pk>/', boards_view.topic_posts, name='topic_posts'),
-    path('boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/reply/', boards_view.reply_topic, name='reply_topic'),
-    path('boards/(?P<pk>\d+)/topics/(?P<topic_pk>\d+)/posts/(?P<post_pk>\d+)/edit/$', boards_view.PostUpdateView.as_view(), name='edit_post'),
+    path('boards/<pk>/topics/<topic_pk>/', boards_view.topic_posts, name='topic_posts'),
+    path('boards/<pk>/topics/<topic_pk>/reply/', boards_view.reply_topic, name='reply_topic'),
+    path('boards/<pk>/topics/<topic_pk>/posts/<post_pk>/edit/', boards_view.PostUpdateView.as_view(), name='edit_post'),
 
     # 我的账户视图
-    path('settings/account/$',
+    path('settings/account/',
          accounts_views.UserUpdateView .as_view(), name='my_account'),
 ]
 
