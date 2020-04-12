@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',        # 消息框架
     'django.contrib.staticfiles',     # 管理静态文件的框架
 
-    'widget_tweaks', # 更好的控制渲染的处理
+    # 'widget_tweaks', # 更好的控制渲染的处理
     'django.contrib.humanize',  # 内置的人性化
     'app_blog', # 注册 blog 应用
 
