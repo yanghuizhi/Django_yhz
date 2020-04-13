@@ -42,10 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.humanize',        # 内置的人性化处理应用
 
     'boards',  # 创建一个简单的网络论坛或者讨论区
-
-    'app_blog',  # 注册 blog 应用
+    'accounts',  # 登录系统
     'app_test',  # 测试类
-    'accounts',  # 拆解上一个系统，独立登录系统
 ]
 
 

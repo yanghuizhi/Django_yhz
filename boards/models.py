@@ -6,6 +6,11 @@ from django.utils.html import mark_safe
 from markdown import markdown
 # Create your models here.
 
+"""
+    django 要求模型必须继承 models.Model 类
+    django 内置全部类型文档：
+    https://docs.djangoproject.com/en/2.2/ref/models/fields/#field-types
+"""
 
 class Board(models.Model):
     """
@@ -17,6 +22,10 @@ class Board(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = '分类'
+        verbose_name_plural = verbose_name
 
     def get_posts_count(self):
         return Post.objects.filter(topic__board=self).count()
@@ -38,6 +47,10 @@ class Topic(models.Model):
 
     def __str__(self):
         return self.subject
+
+    class Meta:
+        verbose_name = '标签'
+        verbose_name_plural = verbose_name
 
     def get_page_count(self):
         count = self.posts.count()
@@ -65,10 +78,13 @@ class Post(models.Model):
     """
         帖子
     """
+    # 文章标题
+    title = models.CharField('标题', max_length=70)
+    body = models.TextField('正文')
     message = models.TextField(max_length=4000)
     # auto_now_add=True 当前日期和时间
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(null=True)
+    created_time = models.DateTimeField(auto_now_add=True)
+    updated_time = models.DateTimeField(null=True)
     created_by = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
     updated_by = models.ForeignKey(User, null=True, related_name='+', on_delete=models.CASCADE)
     topic = models.ForeignKey(Topic, related_name='posts', on_delete=models.CASCADE)
@@ -81,4 +97,8 @@ class Post(models.Model):
     def get_message_as_markdown(self):
         # Markdown支持
         return mark_safe(markdown(self.message, safe_mode='escape'))
-    pass
+
+
+    class Meta:
+        verbose_name = '文章'
+        verbose_name_plural = verbose_name
