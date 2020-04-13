@@ -14,7 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+STATIC_URL = '/static/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -38,15 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',        # 会话框架
     'django.contrib.messages',        # 消息框架
     'django.contrib.staticfiles',     # 管理静态文件的框架
+    'widget_tweaks',                  # templates表单渲染应用
+    'django.contrib.humanize',        # 内置的人性化处理应用
 
-    # 'widget_tweaks', # 更好的控制渲染的处理
-    'django.contrib.humanize',  # 内置的人性化
-    'app_blog', # 注册 blog 应用
+    'boards',  # 创建一个简单的网络论坛或者讨论区
 
-    'app_test', # 测试类
-    
-    'app_boards',
-    'app_accounts', # 拆解上一个系统，独立登录系统
+    'app_blog',  # 注册 blog 应用
+    'app_test',  # 测试类
+    'accounts',  # 拆解上一个系统，独立登录系统
 ]
 
 
@@ -61,10 +60,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# 根路由配置
+# 根路由
 ROOT_URLCONF = 'Django_Learn_YHZ.urls'
 
-# 注册静态网页地址
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -85,6 +84,12 @@ TEMPLATES = [
         },
     },
 ]
+
+
+# 静态文件
+STATICFILES_DIRS = (
+      os.path.join(BASE_DIR, 'static'),
+    )
 
 
 WSGI_APPLICATION = 'Django_Learn_YHZ.wsgi.application'
@@ -173,12 +178,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
-
-# 配置静态文件路径
-STATICFILES_DIRS = (
-      os.path.join(BASE_DIR, 'static'),
-    )
 
 # 配置 media第二步路径，存放用户上传的图片资料等
 MEDIA_URL = '/matem/'
@@ -192,8 +191,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'matem')
 
 # 变量指定了一个URL模型的名称，以告诉Django当用户退出登录之后跳转的地址。
 LOGOUT_REDIRECT_URL = 'home'
+# 成功登录后将用户重定向到哪里
+LOGIN_REDIRECT_URL = 'home'
+# 定义我们应用程序的登录URL
+LOGIN_URL = 'login'
 
 # 邮件
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# 重定向登录界面
-LOGIN_URL = 'login'

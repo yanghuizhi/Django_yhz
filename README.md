@@ -29,23 +29,23 @@ STATICFILES_DIRS = (
 ```
 django-admin.py     # 是Django的一个用于管理任务的命令行工具；
 
-Djangoyhz                           # 项目的容器 Django Project
-    |-- Djangoyhz                   # 对整个程序进行配置，包含着你的项目，纯python包
+Djangoyhz                             # 项目的容器 Django Project
+    |-- Djangoyhz                     # 对整个程序进行配置，包含着你的项目，纯python包
         ┗━━ __init__.py             # 默认一个包文件
         ┗━━ settings.py             # 配置文件，包括数据库信息，调试标志以及其他一些工作的变量。
-        ┗━━ urls.py                 # URL 对应关系，就像网站的目录一样，网址入口，关联到对应的views.py中的一个函数（或者generic类），访问网址就对应一个函数。
+        ┗━━ urls.py                 # 映射项目中的路由和路径
         ┗━━ wsgi.py                 # 作为你的项目的运行在 WSGI 兼容的Web服务器上的入口。uwsgi+nginx
-    |-- manage.py                   # 管理 Django 程序。
-    |-- templates (自己创建的文件夹)   # 中的函数渲染templates中的Html模板，得到动态内容的网页，当然可以用缓存来提高速度。
+    |-- manage.py                      # 管理 Django 程序。
+    |-- templates (自己创建的文件夹)    # 中的函数渲染templates中的Html模板，得到动态内容的网页，当然可以用缓存来提高速度。
 
 APP
-    |-- migrations       # 数据修改表结构
+    |-- migrations       # Django会存储一些文件以跟踪你在models.py文件中创建的变更，用来保持数据库和models.py的同步。
         ┗━━ __init__.py
     |-- admin.py         # Django为我们提供了后台管理，包括数据库信息，调试标志以及其他一些工作的变量。
-    |-- apps.py          # 配置当前app，负责把URL模式映射到应用程序。
-    |-- models.py        # ORM，写指定的类，通过命令可以创建数据库结构
+    |-- apps.py          # 这是应用程序本身的配置文件
+    |-- models.py        # 定义Web应用程序数据实例的地方。models会由Django自动转换为数据库表。
     |-- tests.py         # 单元测试
-    |-- views.py         # 业务代码
+    |-- views.py         # 这是我们处理Web应用程序请求(request)/响应(resopnse)周期的文件。
 ```
 
 
@@ -58,7 +58,7 @@ APP
 ### 杂：
 ```
 python -m django --version  # 查看版本
-
+python manage.py test --verbosity=2  # 测试，0无输出，1正常输出，2详细输出
 
 ```
 
